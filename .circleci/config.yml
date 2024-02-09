@@ -1,0 +1,21 @@
+version: 2.1
+jobs:
+  run_tests:
+    docker:
+      - image: circleci/python:3.7.4
+    steps:
+      - checkout
+      - run:
+          name: Install Python dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Run Pytest
+          command: pytest
+       - store_test_results:
+          path: test-reports
+      - store_artifacts:
+          path: test-reports
+workflows:
+  build_test:
+    jobs:
+      - run_tests
